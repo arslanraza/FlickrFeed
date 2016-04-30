@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		A8E31FEC1CD4C797009BFDF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E31FEB1CD4C797009BFDF6 /* AppDelegate.swift */; };
-		A8E31FEE1CD4C797009BFDF6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E31FED1CD4C797009BFDF6 /* ViewController.swift */; };
 		A8E31FF11CD4C797009BFDF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8E31FEF1CD4C797009BFDF6 /* Main.storyboard */; };
 		A8E31FF31CD4C797009BFDF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8E31FF21CD4C797009BFDF6 /* Assets.xcassets */; };
 		A8E31FF61CD4C797009BFDF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8E31FF41CD4C797009BFDF6 /* LaunchScreen.storyboard */; };
 		A8E320011CD4C797009BFDF6 /* FlickrFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E320001CD4C797009BFDF6 /* FlickrFeedTests.swift */; };
+		A8E320121CD4C9A5009BFDF6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E320111CD4C9A5009BFDF6 /* Constants.swift */; };
+		A8E320141CD4CA28009BFDF6 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E320131CD4CA28009BFDF6 /* FeedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +29,6 @@
 /* Begin PBXFileReference section */
 		A8E31FE81CD4C797009BFDF6 /* FlickrFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickrFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8E31FEB1CD4C797009BFDF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A8E31FED1CD4C797009BFDF6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A8E31FF01CD4C797009BFDF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A8E31FF21CD4C797009BFDF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A8E31FF51CD4C797009BFDF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +36,8 @@
 		A8E31FFC1CD4C797009BFDF6 /* FlickrFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlickrFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8E320001CD4C797009BFDF6 /* FlickrFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrFeedTests.swift; sourceTree = "<group>"; };
 		A8E320021CD4C797009BFDF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A8E320111CD4C9A5009BFDF6 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A8E320131CD4CA28009BFDF6 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +79,17 @@
 		A8E31FEA1CD4C797009BFDF6 /* FlickrFeed */ = {
 			isa = PBXGroup;
 			children = (
+				A8E320111CD4C9A5009BFDF6 /* Constants.swift */,
 				A8E31FEB1CD4C797009BFDF6 /* AppDelegate.swift */,
-				A8E31FED1CD4C797009BFDF6 /* ViewController.swift */,
 				A8E31FEF1CD4C797009BFDF6 /* Main.storyboard */,
 				A8E31FF21CD4C797009BFDF6 /* Assets.xcassets */,
 				A8E31FF41CD4C797009BFDF6 /* LaunchScreen.storyboard */,
 				A8E31FF71CD4C797009BFDF6 /* Info.plist */,
+				A8E3200D1CD4C92A009BFDF6 /* Utilities */,
+				A8E3200C1CD4C92A009BFDF6 /* Models */,
+				A8E3200F1CD4C92A009BFDF6 /* Views */,
+				A8E3200B1CD4C92A009BFDF6 /* Controllers */,
+				A8E320101CD4C94D009BFDF6 /* Resources */,
 			);
 			path = FlickrFeed;
 			sourceTree = "<group>";
@@ -94,6 +101,50 @@
 				A8E320021CD4C797009BFDF6 /* Info.plist */,
 			);
 			path = FlickrFeedTests;
+			sourceTree = "<group>";
+		};
+		A8E3200B1CD4C92A009BFDF6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A8E320131CD4CA28009BFDF6 /* FeedViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		A8E3200C1CD4C92A009BFDF6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A8E3200D1CD4C92A009BFDF6 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A8E3200E1CD4C92A009BFDF6 /* Categories */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		A8E3200E1CD4C92A009BFDF6 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		A8E3200F1CD4C92A009BFDF6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A8E320101CD4C94D009BFDF6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,8 +250,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8E31FEE1CD4C797009BFDF6 /* ViewController.swift in Sources */,
 				A8E31FEC1CD4C797009BFDF6 /* AppDelegate.swift in Sources */,
+				A8E320141CD4CA28009BFDF6 /* FeedViewController.swift in Sources */,
+				A8E320121CD4C9A5009BFDF6 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +442,7 @@
 				A8E320071CD4C797009BFDF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A8E320081CD4C797009BFDF6 /* Build configuration list for PBXNativeTarget "FlickrFeedTests" */ = {
 			isa = XCConfigurationList;
@@ -398,6 +451,7 @@
 				A8E3200A1CD4C797009BFDF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
