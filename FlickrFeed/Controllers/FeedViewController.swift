@@ -6,6 +6,8 @@
 //  Copyright © 2016 Arslan Raza. All rights reserved.
 //
 
+// ADDS CheckPoint of the day
+
 import UIKit
 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
