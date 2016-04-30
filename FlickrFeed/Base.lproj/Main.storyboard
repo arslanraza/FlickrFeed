@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Flickr Feed-->
@@ -36,7 +37,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24n-fQ-sGp">
-                                                    <rect key="frame" x="112" y="15" width="26" height="18"/>
+                                                    <rect key="frame" x="112" y="15" width="451" height="18"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -45,6 +46,7 @@
                                             <constraints>
                                                 <constraint firstItem="n4P-yH-vkY" firstAttribute="leading" secondItem="xl1-41-VUi" secondAttribute="leading" constant="15" id="4aK-if-3xy"/>
                                                 <constraint firstItem="24n-fQ-sGp" firstAttribute="leading" secondItem="n4P-yH-vkY" secondAttribute="trailing" constant="12" id="H7o-3T-UPk"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="24n-fQ-sGp" secondAttribute="trailing" constant="29" id="QSa-1T-Y8V"/>
                                                 <constraint firstItem="n4P-yH-vkY" firstAttribute="centerY" secondItem="xl1-41-VUi" secondAttribute="centerY" id="UJw-sP-87g"/>
                                                 <constraint firstItem="24n-fQ-sGp" firstAttribute="top" secondItem="n4P-yH-vkY" secondAttribute="top" id="wCX-70-GgG"/>
                                             </constraints>

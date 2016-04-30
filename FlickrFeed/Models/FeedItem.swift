@@ -42,4 +42,7 @@ class FeedItem: NSObject {
     
     // MARK: Public methods
     
+    func displayInfo()  {
+        print("Title: \(title)")
+    }
 }

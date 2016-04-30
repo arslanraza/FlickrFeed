@@ -10,9 +10,12 @@ import UIKit
 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    
     @IBOutlet weak var tableView: UITableView!
+    
+    private var currentFeeds = Array<FeedItem>()
+    
     // MARK: Private methods
+    
     
     // MARK: Life Cycle methods
     
@@ -21,6 +24,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        FlickrFeedManager.sharedManager.loadPublicFeed { (feeds) in
+//            print(feeds)
+            if feeds != nil {
+                self.currentFeeds = feeds!
+                self.tableView.reloadData()
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,12 +42,15 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - UITableViewDataSource Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return (currentFeeds.count)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell") as! FeedItemCell
+        
+        let singleFeed = currentFeeds[indexPath.row]
+        cell.feedTitle.text = singleFeed.title
         
         return cell
     }
