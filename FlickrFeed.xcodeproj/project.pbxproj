@@ -17,6 +17,8 @@
 		A8E320161CD4CC7A009BFDF6 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E320151CD4CC7A009BFDF6 /* FeedItem.swift */; };
 		A8E320181CD4CC94009BFDF6 /* FeedItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E320171CD4CC94009BFDF6 /* FeedItemCell.swift */; };
 		A8E3201A1CD4D282009BFDF6 /* FlickrFeedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E320191CD4D282009BFDF6 /* FlickrFeedManager.swift */; };
+		A8E3201C1CD4E2AE009BFDF6 /* RUUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E3201B1CD4E2AE009BFDF6 /* RUUtility.swift */; };
+		A8E3201E1CD4E6A8009BFDF6 /* RUExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E3201D1CD4E6A8009BFDF6 /* RUExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		A8E320151CD4CC7A009BFDF6 /* FeedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 		A8E320171CD4CC94009BFDF6 /* FeedItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedItemCell.swift; sourceTree = "<group>"; };
 		A8E320191CD4D282009BFDF6 /* FlickrFeedManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrFeedManager.swift; sourceTree = "<group>"; };
+		A8E3201B1CD4E2AE009BFDF6 /* RUUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RUUtility.swift; sourceTree = "<group>"; };
+		A8E3201D1CD4E6A8009BFDF6 /* RUExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RUExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				A8E320191CD4D282009BFDF6 /* FlickrFeedManager.swift */,
+				A8E3201B1CD4E2AE009BFDF6 /* RUUtility.swift */,
 				A8E3200E1CD4C92A009BFDF6 /* Categories */,
 			);
 			path = Utilities;
@@ -137,6 +142,7 @@
 		A8E3200E1CD4C92A009BFDF6 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				A8E3201D1CD4E6A8009BFDF6 /* RUExtensions.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -263,8 +269,10 @@
 				A8E31FEC1CD4C797009BFDF6 /* AppDelegate.swift in Sources */,
 				A8E3201A1CD4D282009BFDF6 /* FlickrFeedManager.swift in Sources */,
 				A8E320141CD4CA28009BFDF6 /* FeedViewController.swift in Sources */,
+				A8E3201E1CD4E6A8009BFDF6 /* RUExtensions.swift in Sources */,
 				A8E320121CD4C9A5009BFDF6 /* Constants.swift in Sources */,
 				A8E320181CD4CC94009BFDF6 /* FeedItemCell.swift in Sources */,
+				A8E3201C1CD4E2AE009BFDF6 /* RUUtility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

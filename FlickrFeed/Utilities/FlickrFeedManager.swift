@@ -48,7 +48,7 @@ class FlickrFeedManager: NSObject {
         }
         
         let request = NSMutableURLRequest(URL:endpoint)
-        
+//        request
         session.dataTaskWithRequest(request) { (data, response, error) in
             
             if (error == nil) {

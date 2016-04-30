@@ -33,8 +33,23 @@ class FeedItem: NSObject {
     static func ItemFromDictionary(dictionary: NSDictionary) -> FeedItem? {
         
         let item = FeedItem.init()
+        
         item.title = dictionary["title"] as? String
+        item.link = dictionary["link"] as? String
         item.imageDescription = dictionary["description"] as? String
+        if let media = dictionary["media"] as? NSDictionary {
+            item.imageUrlString = media["m"] as? String
+        }
+        
+        item.author = dictionary["author"] as? String
+        item.authorID = dictionary["author_id"] as? String
+        
+        item.dateTaken = RUUtility.getDateFromString((dictionary["date_taken"] as? String)!)
+        item.datePublished = RUUtility.getDateFromString((dictionary["published"] as? String)!)
+//        item.datePublished =  dictionary["published"] as? NSDate
+        
+        
+        
         
         return item
     }

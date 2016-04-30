@@ -28,7 +28,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         FlickrFeedManager.sharedManager.loadPublicFeed { (feeds) in
 //            print(feeds)
             if feeds != nil {
-                self.currentFeeds = feeds!
+                self.currentFeeds = feeds!//feeds!.sort({ $0.dateTaken!.isGreaterThanDate($1.datePublished!) })
                 self.tableView.reloadData()
             }
         }
