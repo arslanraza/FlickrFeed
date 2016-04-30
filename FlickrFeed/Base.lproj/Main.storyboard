@@ -8,7 +8,7 @@
         <!--Flickr Feed-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="FeedViewController" customModule="FlickrFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="FeedViewController" customModule="FlickrFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,9 +16,63 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Gad-x4-n8b">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="80" id="Coy-wA-diE" customClass="FeedItemCell" customModule="FlickrFeed" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Coy-wA-diE" id="xl1-41-VUi">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeHolder" translatesAutoresizingMaskIntoConstraints="NO" id="n4P-yH-vkY">
+                                                    <rect key="frame" x="15" y="15" width="85" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="QW6-LB-6ug"/>
+                                                        <constraint firstAttribute="width" constant="85" id="dZZ-Tk-wKL"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24n-fQ-sGp">
+                                                    <rect key="frame" x="112" y="15" width="26" height="18"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="n4P-yH-vkY" firstAttribute="leading" secondItem="xl1-41-VUi" secondAttribute="leading" constant="15" id="4aK-if-3xy"/>
+                                                <constraint firstItem="24n-fQ-sGp" firstAttribute="leading" secondItem="n4P-yH-vkY" secondAttribute="trailing" constant="12" id="H7o-3T-UPk"/>
+                                                <constraint firstItem="n4P-yH-vkY" firstAttribute="centerY" secondItem="xl1-41-VUi" secondAttribute="centerY" id="UJw-sP-87g"/>
+                                                <constraint firstItem="24n-fQ-sGp" firstAttribute="top" secondItem="n4P-yH-vkY" secondAttribute="top" id="wCX-70-GgG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="feedImageView" destination="n4P-yH-vkY" id="97a-KF-3dj"/>
+                                            <outlet property="feedTitle" destination="24n-fQ-sGp" id="8JX-Ow-Htf"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="PFC-Ko-R66"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="IIa-EZ-O3A"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Gad-x4-n8b" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6Us-Y5-ukF"/>
+                            <constraint firstItem="Gad-x4-n8b" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="NGw-FZ-yXI"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Gad-x4-n8b" secondAttribute="bottom" id="Pfg-gv-BP4"/>
+                            <constraint firstAttribute="trailing" secondItem="Gad-x4-n8b" secondAttribute="trailing" id="zky-WA-bzu"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Flickr Feed" id="hO7-fT-yWZ"/>
+                    <connections>
+                        <outlet property="tableView" destination="Gad-x4-n8b" id="AOc-pL-tps"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -43,4 +97,7 @@
             <point key="canvasLocation" x="874" y="246"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="placeHolder" width="85" height="50"/>
+    </resources>
 </document>

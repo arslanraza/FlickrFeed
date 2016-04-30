@@ -8,9 +8,10 @@
 
 import UIKit
 
-class FeedViewController: UIViewController {
+class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
+    @IBOutlet weak var tableView: UITableView!
     // MARK: Private methods
     
     // MARK: Life Cycle methods
@@ -27,6 +28,25 @@ class FeedViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - UITableViewDataSource Methods
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell") as! FeedItemCell
+        
+        return cell
+    }
+    
+    // MARK: - UITableViewDelegate Methods
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+    }
 
     /*
     // MARK: - Navigation
