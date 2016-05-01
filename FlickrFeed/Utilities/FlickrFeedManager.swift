@@ -21,8 +21,7 @@ class FlickrFeedManager: NSObject {
     static let sharedManager = FlickrFeedManager()
     
     // Mark: Private Vars
-    private let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
-    
+    private let session = SessionManager.mainSession
     
     // MARK: Private methods
     
@@ -51,10 +50,6 @@ class FlickrFeedManager: NSObject {
 //        request
         session.dataTaskWithRequest(request) { (data, response, error) in
             
-            if (error == nil) {
-                
-            }
-            
             do {
                 guard let data = data else {
                     throw JSONError.NoData
@@ -64,7 +59,7 @@ class FlickrFeedManager: NSObject {
                     throw JSONError.ConversionFailed
                     //                    return
                 }
-                print(json)
+//                print(json)
                 
                 guard let items = json["items"] as? Array<NSDictionary> else {
                     throw JSONError.ConversionFailed
@@ -92,6 +87,6 @@ class FlickrFeedManager: NSObject {
                 })
             }
             }.resume()
-    }
+    }  
     
 }
