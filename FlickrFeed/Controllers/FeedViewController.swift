@@ -10,7 +10,7 @@
 
 import UIKit
 
-class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -54,6 +54,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         let singleFeed = currentFeeds[indexPath.row]
         cell.feedTitle.text = singleFeed.title
         
+        ImageDownloader.sharedInstance.downloadImage(singleFeed.imageUrlString) { (image) in
+            cell.feedImageView.image = image
+        }
+        
         return cell
     }
     
@@ -63,7 +67,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
     }
-
+    
     /*
     // MARK: - Navigation
 

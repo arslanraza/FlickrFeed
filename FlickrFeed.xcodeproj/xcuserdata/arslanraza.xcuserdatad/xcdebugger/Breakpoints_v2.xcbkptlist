@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlickrFeed/Utilities/RUUtility.swift"
-            timestampString = "483714434.609803"
+            timestampString = "483822394.844166"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
             landmarkName = "getDateFromString(_:)"
             landmarkType = "5">
          </BreakpointContent>
