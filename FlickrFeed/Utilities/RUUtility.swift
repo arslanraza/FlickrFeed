@@ -14,11 +14,12 @@ class RUUtility: NSObject {
     static func getDateFromString(dateString: String) -> NSDate? {
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-mm-dd HH:mm:ss"
+        dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         
-        var newDateString = dateString.stringByReplacingOccurrencesOfString("T", withString: " ")
-        newDateString = newDateString.stringByReplacingOccurrencesOfString("Z", withString: "")
-        let date = dateFormatter.dateFromString(newDateString)
+//        var newDateString = dateString.stringByReplacingOccurrencesOfString("T", withString: " ")
+//        newDateString = newDateString.stringByReplacingOccurrencesOfString("Z", withString: "")
+        let date = dateFormatter.dateFromString(dateString)
         
         return date
     }
