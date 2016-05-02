@@ -33,33 +33,47 @@ class FlickrFeedManager: NSObject {
     
     // MARK: Public methods
     
- /**
+    /**
      Load Public Feed from Flickr Public API
-     - @return feeds: Returns a list of public feed. Returns nil if no feed is found
- */
+     - Returns: An optional object of public feed array
+     */
     func loadPublicFeed(completion: ((feeds: Array<FeedItem>?) -> Void)) {
         
         let urlPath = kPublicFeedURL
         
         guard let endpoint = NSURL(string: urlPath) else {
             print("Error creating Public API URL")
+            completion(feeds: nil)
             return
         }
         
         let request = NSMutableURLRequest(URL:endpoint)
-//        request
         session.dataTaskWithRequest(request) { (data, response, error) in
             
             do {
                 guard let data = data else {
                     throw JSONError.NoData
-                    //                    return
                 }
-                guard let json = try NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments]) as? NSDictionary else {
+                
+                /**
+                 JSON from flicker contains escape sequence \' which is not a valid json string.
+                 We will have to extra step to remove the occurances of above escapse sequence
+                 */
+                var jsonString = NSString(data: data, encoding: NSUTF8StringEncoding)
+                //                print(jsonString)
+                
+                // Removing the occurances of escape sequence which casues JSON parsing issues.
+                jsonString = jsonString?.stringByReplacingOccurrencesOfString("\\'", withString: "'")
+                
+                // Creating new data object from the refined json string
+                let refinedData = jsonString?.dataUsingEncoding(NSUTF8StringEncoding)
+                
+                // PARSING JSON DATA
+                guard let json = try NSJSONSerialization.JSONObjectWithData(refinedData!, options: []) as? NSDictionary else {
                     throw JSONError.ConversionFailed
-                    //                    return
                 }
-//                print(json)
+                
+                //                print(json)
                 
                 guard let items = json["items"] as? Array<NSDictionary> else {
                     throw JSONError.ConversionFailed
@@ -71,7 +85,8 @@ class FlickrFeedManager: NSObject {
                     let singleFeed = FeedItem.ItemFromDictionary(singleItemData)
                     feeds.append(singleFeed!)
                 }
-                dispatch_async(dispatch_get_main_queue(), { 
+                
+                dispatch_async(dispatch_get_main_queue(), {
                     completion(feeds: feeds)
                 })
                 

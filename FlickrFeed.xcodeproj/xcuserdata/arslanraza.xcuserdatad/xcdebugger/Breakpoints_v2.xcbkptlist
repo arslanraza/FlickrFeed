@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlickrFeed/Models/FeedItem.swift"
-            timestampString = "483713925.250713"
+            timestampString = "483909236.63116"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "ItemFromDictionary(_:)"
             landmarkType = "5">
          </BreakpointContent>

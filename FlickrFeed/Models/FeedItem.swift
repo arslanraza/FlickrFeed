@@ -19,6 +19,7 @@ class FeedItem: NSObject {
     var imageDescription: String?
     var author: String?
     var authorID: String?
+    var feedImage: UIImage?
     
     // MARK: Private methods
     

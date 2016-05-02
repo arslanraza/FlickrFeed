@@ -44,7 +44,7 @@ class ImageDownloader: NSObject {
         session.downloadTaskWithURL(endpoint) { (url, urlResponse, error) in
             if error == nil {
                 if let image = UIImage.init(data: NSData(contentsOfURL: url!)!) {
-                    print("ImageDownloaded: \(imageURL)")
+//                    print("ImageDownloaded: \(imageURL)")
                     dispatch_async(dispatch_get_main_queue(), {
                         completion(image: image)
                     })
