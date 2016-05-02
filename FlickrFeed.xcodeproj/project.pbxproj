@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A897A79D1CD7E1AC0026DE5D /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A897A79C1CD7E1AC0026DE5D /* ImageCache.swift */; };
 		A8E31FEC1CD4C797009BFDF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E31FEB1CD4C797009BFDF6 /* AppDelegate.swift */; };
 		A8E31FF11CD4C797009BFDF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8E31FEF1CD4C797009BFDF6 /* Main.storyboard */; };
 		A8E31FF31CD4C797009BFDF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8E31FF21CD4C797009BFDF6 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A897A79C1CD7E1AC0026DE5D /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		A8E31FE81CD4C797009BFDF6 /* FlickrFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickrFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8E31FEB1CD4C797009BFDF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8E31FF01CD4C797009BFDF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 		A8E3200D1CD4C92A009BFDF6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				A897A79C1CD7E1AC0026DE5D /* ImageCache.swift */,
 				A8E320211CD698E9009BFDF6 /* SessionManager.swift */,
 				A8E320191CD4D282009BFDF6 /* FlickrFeedManager.swift */,
 				A8E3201F1CD69195009BFDF6 /* ImageDownloader.swift */,
@@ -271,6 +274,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A897A79D1CD7E1AC0026DE5D /* ImageCache.swift in Sources */,
 				A8E320161CD4CC7A009BFDF6 /* FeedItem.swift in Sources */,
 				A8E31FEC1CD4C797009BFDF6 /* AppDelegate.swift in Sources */,
 				A8E3201A1CD4D282009BFDF6 /* FlickrFeedManager.swift in Sources */,
