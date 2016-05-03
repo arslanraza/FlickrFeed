@@ -19,9 +19,10 @@ class FeedDetailController: UIViewController {
     @IBOutlet weak var labelDatePublished: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textviewDescription: UITextView!
+    @IBOutlet weak var viewHeader: UIView!
+    @IBOutlet weak var viewFooter: UIView!
     
-    
-    
+    var isDetailAvailable = true
     
     // MARK: Private methods
     
@@ -66,4 +67,18 @@ class FeedDetailController: UIViewController {
     
     // MARK: Public methods
 
+    @IBAction func handleTap(sender: AnyObject) {
+//        print("Tap Done")
+        
+        if isDetailAvailable {
+            self.viewHeader.fadeOut()
+            self.viewFooter.fadeOut()
+            isDetailAvailable = false
+        } else {
+            self.viewHeader.fadeTo(0.5)
+            self.viewFooter.fadeTo(0.5)
+            isDetailAvailable = true
+        }
+        
+    }
 }

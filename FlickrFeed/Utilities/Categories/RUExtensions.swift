@@ -61,12 +61,12 @@ extension NSDate {
 // UIVIEW EXTENSION
 // ===========================================================
 
-let kAnimTime = 0.4
+let kAnimTime = 0.3
 
 extension UIView {
     
-    func fadeOut(delay: NSTimeInterval) {
-        UIView.animateWithDuration(kAnimTime, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: { 
+    func fadeOut() {
+        UIView.animateWithDuration(kAnimTime, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             self.alpha = 0.0
             }, completion: nil)
     }
