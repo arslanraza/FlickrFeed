@@ -9,7 +9,7 @@
         <!--Flickr Feed-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="FeedViewController" customModule="FlickrFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="FeedsViewController" customModule="FlickrFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -87,11 +87,30 @@
                     <navigationItem key="navigationItem" title="Flickr Feed" id="hO7-fT-yWZ"/>
                     <connections>
                         <outlet property="tableView" destination="Gad-x4-n8b" id="AOc-pL-tps"/>
+                        <segue destination="XKz-fR-RFR" kind="show" identifier="FeedDetailView" id="ihU-X9-NYT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1548" y="246"/>
+        </scene>
+        <!--Feed Detail Controller-->
+        <scene sceneID="2tV-QT-acv">
+            <objects>
+                <viewController id="XKz-fR-RFR" customClass="FeedDetailController" customModule="FlickrFeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rw4-NI-4Yg"/>
+                        <viewControllerLayoutGuide type="bottom" id="kYI-dQ-0dZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vZf-00-tEK">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eiy-fV-QhJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2220" y="246"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EVd-yn-6Z8">

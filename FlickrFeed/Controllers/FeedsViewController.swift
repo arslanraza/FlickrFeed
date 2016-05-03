@@ -10,11 +10,12 @@
 
 import UIKit
 
-class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     private var currentFeeds = Array<FeedItem>()
+    private var selectedIndexPath: NSIndexPath?
     
     // MARK: Private methods
     
@@ -102,7 +103,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
+        selectedIndexPath = indexPath
+        performSegueWithIdentifier(Segues.FeedDetailView, sender: self)
     }
     
     // MARK: UIScrollVIewDelegate Methods
@@ -113,15 +115,21 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    /*
+    
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
+        if segue.identifier == Segues.FeedDetailView {
+            print("Perform Custom Action")
+            let singleFeed = currentFeeds[selectedIndexPath!.row]
+            let feedDetailView = segue.destinationViewController as! FeedDetailController
+            feedDetailView.title = singleFeed.title
+        }
      }
-     */
+    
     
     // MARK: Public methods
     

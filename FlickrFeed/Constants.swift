@@ -12,3 +12,7 @@
 
 import Foundation
 
+
+struct Segues {
+    static let FeedDetailView           = "FeedDetailView"
+}
