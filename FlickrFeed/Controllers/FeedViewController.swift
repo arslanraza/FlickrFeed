@@ -6,7 +6,7 @@
 //  Copyright © 2016 Arslan Raza. All rights reserved.
 //
 
-// ADDS CheckPoint of the day
+// Adds Work Start CheckPoint
 
 import UIKit
 
