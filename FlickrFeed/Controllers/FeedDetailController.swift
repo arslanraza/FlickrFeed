@@ -9,15 +9,41 @@
 import UIKit
 
 class FeedDetailController: UIViewController {
-
+    
+    // MARK: Variables
+    var currentFeedItem: FeedItem?
+    
+    // MARK: Outlets
+    @IBOutlet weak var labelTitle: UILabel!
+    @IBOutlet weak var labelAuthor: UILabel!
+    @IBOutlet weak var labelDatePublished: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var textviewDescription: UITextView!
+    
+    
+    
+    
     // MARK: Private methods
+    
+    private func loadCurrentFeed() {
+        
+        if let currentFeedItem = currentFeedItem {
+            
+            labelTitle.text = currentFeedItem.title
+            labelAuthor.text = currentFeedItem.author
+            textviewDescription.text = currentFeedItem.imageDescription
+            
+            imageView.image = currentFeedItem.feedImage
+            
+        }
+    }
     
     // MARK: Life Cycle methods
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        loadCurrentFeed()
         // Do any additional setup after loading the view.
     }
 

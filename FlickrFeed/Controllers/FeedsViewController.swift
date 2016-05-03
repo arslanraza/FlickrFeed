@@ -126,7 +126,8 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             print("Perform Custom Action")
             let singleFeed = currentFeeds[selectedIndexPath!.row]
             let feedDetailView = segue.destinationViewController as! FeedDetailController
-            feedDetailView.title = singleFeed.title
+            feedDetailView.title = "Feed Detail"
+            feedDetailView.currentFeedItem = singleFeed
         }
      }
     

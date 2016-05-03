@@ -7,6 +7,11 @@
 //
 
 import Foundation
+import UIKit
+
+// ===========================================================
+// NSDate EXTENSION
+// ===========================================================
 
 extension NSDate {
     func isGreaterThanDate(dateToCompare: NSDate) -> Bool {
@@ -46,5 +51,29 @@ extension NSDate {
         
         //Return Result
         return isEqualTo
+    }
+}
+
+
+
+
+// ===========================================================
+// UIVIEW EXTENSION
+// ===========================================================
+
+let kAnimTime = 0.4
+
+extension UIView {
+    
+    func fadeOut(delay: NSTimeInterval) {
+        UIView.animateWithDuration(kAnimTime, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: { 
+            self.alpha = 0.0
+            }, completion: nil)
+    }
+    
+    func fadeTo(alpha: CGFloat) {
+        UIView.animateWithDuration(kAnimTime, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.alpha = alpha
+            }, completion: nil)
     }
 }
