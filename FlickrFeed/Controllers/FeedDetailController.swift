@@ -31,8 +31,9 @@ class FeedDetailController: UIViewController {
             
             labelTitle.text = currentFeedItem.title
             labelAuthor.text = currentFeedItem.author
-            textviewDescription.text = currentFeedItem.imageDescription
             
+            let str = currentFeedItem.imageDescription!.stringByReplacingOccurrencesOfString("<[^>]+>", withString: "", options: .RegularExpressionSearch, range: nil)
+            textviewDescription.text = str//currentFeedItem.imageDescription
             imageView.image = currentFeedItem.feedImage
             
         }
