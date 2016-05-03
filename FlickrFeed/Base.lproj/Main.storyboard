@@ -19,14 +19,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Gad-x4-n8b">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="508"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="80" id="Coy-wA-diE" customClass="FeedItemCell" customModule="FlickrFeed" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Coy-wA-diE" id="xl1-41-VUi">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeHolder" translatesAutoresizingMaskIntoConstraints="NO" id="n4P-yH-vkY">
@@ -39,7 +39,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24n-fQ-sGp">
                                                     <rect key="frame" x="112" y="15" width="451" height="18"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -62,12 +62,25 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="IIa-EZ-O3A"/>
                                 </connections>
                             </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2vH-gj-WDq">
+                                <rect key="frame" x="0.0" y="64" width="600" height="29"/>
+                                <segments>
+                                    <segment title="Date Taken"/>
+                                    <segment title="Date Published"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="XNX-ne-gLX"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Gad-x4-n8b" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6Us-Y5-ukF"/>
-                            <constraint firstItem="Gad-x4-n8b" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="NGw-FZ-yXI"/>
+                            <constraint firstItem="Gad-x4-n8b" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="28" id="NGw-FZ-yXI"/>
+                            <constraint firstAttribute="trailing" secondItem="2vH-gj-WDq" secondAttribute="trailing" id="PJR-1F-vXc"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Gad-x4-n8b" secondAttribute="bottom" id="Pfg-gv-BP4"/>
+                            <constraint firstItem="2vH-gj-WDq" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="nb3-Rb-2q7"/>
+                            <constraint firstItem="2vH-gj-WDq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="x0u-20-gOb"/>
                             <constraint firstAttribute="trailing" secondItem="Gad-x4-n8b" secondAttribute="trailing" id="zky-WA-bzu"/>
                         </constraints>
                     </view>

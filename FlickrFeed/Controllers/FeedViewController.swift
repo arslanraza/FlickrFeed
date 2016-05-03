@@ -18,6 +18,17 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: Private methods
     
+    private func sortFeed(byDateTaken: Bool) {
+        if byDateTaken {
+            currentFeeds = currentFeeds.sort({ $0.dateTaken!.isGreaterThanDate($1.dateTaken!) })
+        } else {
+            currentFeeds = currentFeeds.sort({ $0.datePublished!.isGreaterThanDate($1.datePublished!) })
+        }
+        
+        self.tableView.reloadData()
+        self.downloadImagesForVisibleCells()
+    }
+    
     
     private func downloadImagesForVisibleCells() {
         if currentFeeds.count > 0 {
@@ -52,9 +63,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         FlickrFeedManager.sharedManager.loadPublicFeed { (feeds) in
             //            print(feeds)
             if feeds != nil {
-                weakSelf?.currentFeeds = feeds!.sort({ $0.dateTaken!.isGreaterThanDate($1.datePublished!) })
-                weakSelf?.tableView.reloadData()
-                weakSelf?.downloadImagesForVisibleCells()
+                weakSelf?.currentFeeds = feeds!//feeds!.sort({ $0.dateTaken!.isGreaterThanDate($1.datePublished!) })
+                weakSelf?.sortFeed(true)
             }
         }
     }
@@ -114,5 +124,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
      */
     
     // MARK: Public methods
+    
+    @IBAction func segmentChanged(segmentControl: UISegmentedControl) {
+        
+        if segmentControl.selectedSegmentIndex == 0 {
+            sortFeed(true)
+        } else {
+            sortFeed(false)
+        }
+    }
     
 }
