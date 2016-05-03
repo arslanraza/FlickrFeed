@@ -26,7 +26,7 @@ class FeedDetailController: UIViewController {
     
     // MARK: Private methods
     
-    private func loadCurrentFeed() {
+    @objc private func loadCurrentFeed() {
         
         if let currentFeedItem = currentFeedItem {
             
@@ -40,13 +40,60 @@ class FeedDetailController: UIViewController {
         }
     }
     
+    private func showImageSaveAlert() {
+        dispatch_async(dispatch_get_main_queue(), {
+            let alert = UIAlertController(title: "Image saved successfully", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { (action) in
+                alert.dismissViewControllerAnimated(true, completion: nil)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
+        
+    }
+    
+    private func openFeedInBrowser() {
+        if let url = NSURL(string: (currentFeedItem?.link)!) {
+            UIApplication.sharedApplication().openURL(url)
+        }
+        
+    }
+    
+    @objc private func openSheet() {
+        
+        let alert = UIAlertController(title: "Actions", message: "Choose action", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Save Image", style: .Default, handler: { (action) in
+            RUUtility.saveImageToGallery(self.currentFeedItem?.feedImage, target: nil, selector: nil)
+            self.showImageSaveAlert()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Open in browser", style: .Default, handler: { (action) in
+            self.openFeedInBrowser()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Share By Email", style: .Default, handler: { (action) in
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    private func configureNavigationBar() {
+        let barButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(self.openSheet))
+        self.navigationItem.rightBarButtonItem = barButton
+    }
     // MARK: Life Cycle methods
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCurrentFeed()
-        // Do any additional setup after loading the view.
+        configureNavigationBar()
     }
 
     override func didReceiveMemoryWarning() {
