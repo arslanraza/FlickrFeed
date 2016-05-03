@@ -29,4 +29,13 @@ class RUUtility: NSObject {
             UIImageWriteToSavedPhotosAlbum(image, target, selector, nil)
         }
     }
+    
+    static func showInfoAlert(title: String?, message: String?, controller: UIViewController) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { (action) in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        controller.presentViewController(alert, animated: true, completion: nil)
+    }
 }

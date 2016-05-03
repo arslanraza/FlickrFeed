@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class FeedDetailController: UIViewController {
     
@@ -41,22 +42,30 @@ class FeedDetailController: UIViewController {
     }
     
     private func showImageSaveAlert() {
-        dispatch_async(dispatch_get_main_queue(), {
-            let alert = UIAlertController(title: "Image saved successfully", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { (action) in
-                alert.dismissViewControllerAnimated(true, completion: nil)
-            }))
-            
-            self.presentViewController(alert, animated: true, completion: nil)
-        })
-        
+        RUUtility.showInfoAlert("Image Saved Successfully", message: nil, controller: self)
     }
     
     private func openFeedInBrowser() {
         if let url = NSURL(string: (currentFeedItem?.link)!) {
             UIApplication.sharedApplication().openURL(url)
         }
+    }
+    
+    private func shareImageWithEmail () {
         
+        if MFMailComposeViewController.canSendMail() {
+            let mailComposeVC = MFMailComposeViewController()
+            
+            mailComposeVC.addAttachmentData(UIImageJPEGRepresentation((currentFeedItem?.feedImage)!, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "feed.jpg")
+            
+            mailComposeVC.setSubject((currentFeedItem?.title)!)
+            
+            mailComposeVC.setMessageBody("<html><body><p>Saved via Flickr Feed</p></body></html>", isHTML: true)
+            
+            self.presentViewController(mailComposeVC, animated: true, completion: nil)
+        } else {
+            RUUtility.showInfoAlert("Cannot send email", message: "Please check your email settings", controller: self)
+        }
     }
     
     @objc private func openSheet() {
@@ -73,7 +82,7 @@ class FeedDetailController: UIViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Share By Email", style: .Default, handler: { (action) in
-            
+            self.shareImageWithEmail()
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) in
@@ -87,6 +96,10 @@ class FeedDetailController: UIViewController {
         let barButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(self.openSheet))
         self.navigationItem.rightBarButtonItem = barButton
     }
+    
+    
+    
+    
     // MARK: Life Cycle methods
     
     
@@ -95,27 +108,27 @@ class FeedDetailController: UIViewController {
         loadCurrentFeed()
         configureNavigationBar()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
     // MARK: Public methods
-
+    
     @IBAction func handleTap(sender: AnyObject) {
-//        print("Tap Done")
+        //        print("Tap Done")
         
         if isDetailAvailable {
             self.viewHeader.fadeOut()
