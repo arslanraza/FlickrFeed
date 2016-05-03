@@ -24,4 +24,9 @@ class RUUtility: NSObject {
         return date
     }
     
+    static func saveImageToGallery(image: UIImage?, target: AnyObject?, selector: Selector) {
+        if let image = image {
+            UIImageWriteToSavedPhotosAlbum(image, target, selector, nil)
+        }
+    }
 }
