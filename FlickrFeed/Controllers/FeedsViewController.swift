@@ -6,7 +6,7 @@
 //  Copyright © 2016 Arslan Raza. All rights reserved.
 //
 
-// Adds Work Start CheckPoint
+// Checkpoint for Stopping Work
 
 import UIKit
 
