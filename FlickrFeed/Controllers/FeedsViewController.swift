@@ -77,6 +77,7 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
      Loads Public Flickr Feed
      */
     @objc private func loadPublicFeed() {
+        
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         weak var weakSelf = self
         FlickrFeedManager.sharedManager.loadPublicFeed { (feeds) in
