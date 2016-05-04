@@ -28,6 +28,9 @@ class FeedDetailController: UIViewController {
     
     // MARK: Private methods
     
+    /**
+     Loads current Feed data to the UI
+     */
     @objc private func loadCurrentFeed() {
         
         if let currentFeedItem = currentFeedItem {
@@ -42,17 +45,27 @@ class FeedDetailController: UIViewController {
         }
     }
     
+    /**
+     Displays Alert when image is successfully saved
+     */
     private func showImageSaveAlert() {
         RUUtility.showInfoAlert("Image Saved Successfully", message: nil, controller: self)
     }
     
+    /**
+     Opens the feed in the Safari Browser
+     */
     private func openFeedInBrowser() {
         if let url = NSURL(string: (currentFeedItem?.link)!) {
             UIApplication.sharedApplication().openURL(url)
         }
     }
     
-    private func shareImageWithEmail () {
+    /**
+     Opens default mail client with image as an attachment
+     - Returns: MFMailComposeViewController
+     */
+    private func shareImageWithEmail () -> MFMailComposeViewController? {
         
         if MFMailComposeViewController.canSendMail() {
             let mailComposeVC = MFMailComposeViewController()
@@ -61,12 +74,16 @@ class FeedDetailController: UIViewController {
             
             mailComposeVC.setSubject((currentFeedItem?.title)!)
             
-            mailComposeVC.setMessageBody("<html><body><p>Saved via Flickr Feed</p></body></html>", isHTML: true)
+            mailComposeVC.setMessageBody("<html><body><p>Shared via Flickr Feed</p></body></html>", isHTML: true)
             
             self.presentViewController(mailComposeVC, animated: true, completion: nil)
+            
+            return mailComposeVC
         } else {
             RUUtility.showInfoAlert("Cannot send email", message: "Please check your email settings", controller: self)
         }
+        
+        return nil
     }
     
     @objc private func openSheet() {
@@ -110,7 +127,6 @@ class FeedDetailController: UIViewController {
     
     // MARK: Life Cycle methods
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCurrentFeed()
@@ -133,19 +149,11 @@ class FeedDetailController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
     // MARK: Public methods
     
+    /**
+    Hides or Unhides the Header and Footer view on tap event
+    */
     @IBAction func handleTap(sender: AnyObject) {
         //        print("Tap Done")
         

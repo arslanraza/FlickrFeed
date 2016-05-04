@@ -20,6 +20,11 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     // MARK: Private methods
     
+    /**
+     Sort feeds by Date Taken
+     - Parameters:
+         - byDateTaken: Boolean value. Will sort by published date when passed false
+     */
     private func sortFeed(byDateTaken: Bool) {
         hideKeyboard()
         if byDateTaken {
@@ -32,7 +37,9 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.downloadImagesForVisibleCells()
     }
     
-    
+    /**
+     Downloads Images for only visible cells.
+     */
     private func downloadImagesForVisibleCells() {
         if currentFeeds.count > 0 {
             
@@ -45,6 +52,8 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         , completion: { (image, imageURL) in
                             if let image = image {
                                 singleFeed.feedImage = image
+                                // VisibleCell will only have a value if its currently displayed on screen
+                                // Out of bound cells will return for the following check
                                 if let visibleCell = self.tableView.cellForRowAtIndexPath(indexPath) as? FeedItemCell {
                                     visibleCell.imageViewFeed.image = image
                                 }
@@ -55,21 +64,19 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    /**
+     Hides the keyboard if its present on screen
+    */
     private func hideKeyboard() {
         if searchBar.isFirstResponder() {
             searchBar.resignFirstResponder()
         }
     }
     
-    // MARK: Life Cycle methods
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        
-        // Do any additional setup after loading the view.
+    /**
+     Loads Public Flickr Feed
+     */
+    @objc private func loadPublicFeed() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         weak var weakSelf = self
         FlickrFeedManager.sharedManager.loadPublicFeed { (feeds) in
@@ -79,6 +86,28 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 weakSelf?.sortFeed(true)
             }
         }
+    }
+    
+    /**
+     Configures navigation bar
+     */
+    private func configureNavigationBar() {
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        
+        let barButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: #selector(self.loadPublicFeed))
+        navigationItem.rightBarButtonItem = barButton
+    }
+    
+    // MARK: Life Cycle methods
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureNavigationBar()
+        loadPublicFeed()
+        
     }
     
     override func didReceiveMemoryWarning() {

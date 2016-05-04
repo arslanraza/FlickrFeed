@@ -130,11 +130,13 @@ class ImageDownloader: NSObject {
                         weakSelf?.activeDownloads.removeObjectForKey(imageURL)
                         
                     }
+                    // Starts the download task
                     downloadTask.resume()
+                    
+                    // Adding download tasks in the activeDownloads dictionary
                     activeDownloads.setObject(downloadTask, forKey: imageURL)
                 }
-                
             }
         }        
-    }
+    }    
 }
