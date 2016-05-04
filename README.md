@@ -10,5 +10,5 @@ On tapping a row, the app will take you to Feed Detail Screen where more informa
 + iOS 8.0 SDK or later
 
 ## Runtime Requirements
-+ iOS 7.0 or later
++ iOS 8.0 or later
 
