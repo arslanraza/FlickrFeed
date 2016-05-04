@@ -91,6 +91,7 @@ class ImageDownloader: NSObject {
                     
                     guard let endpoint = NSURL(string: imageURL) else {
                         print("Error creating NSURL for image")
+                        completion(image: nil, imageURL: imageURL)
                         return
                     }
                     

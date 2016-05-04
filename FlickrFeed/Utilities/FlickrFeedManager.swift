@@ -113,6 +113,10 @@ class FlickrFeedManager: NSObject {
         loadFeedForURL(kPublicFeedURL, completion: completion)
     }
     
+    /**
+     Search Public Feed with provided tags seperated by commas
+     - Returns: An optional object of public feed array
+     */
     func searchFeedWithTag(tag: String, completion: ((feeds: Array<FeedItem>?) -> Void)) {
         let urlString = kPublicFeedURL.stringByAppendingString("&tags=\(tag)")
         loadFeedForURL(urlString, completion: completion)
