@@ -10,8 +10,11 @@ import UIKit
 
 class FeedItemCell: UITableViewCell {
 
-    @IBOutlet weak var feedTitle: UILabel!
-    @IBOutlet weak var feedImageView: UIImageView!
+    @IBOutlet weak var labelTitle: UILabel!
+    @IBOutlet weak var labelAuthor: UILabel!
+    @IBOutlet weak var labelDatePublished: UILabel!
+    @IBOutlet weak var imageViewFeed: UIImageView!
+    
     
     // MARK: Private methods
     

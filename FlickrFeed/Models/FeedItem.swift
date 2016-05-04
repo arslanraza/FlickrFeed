@@ -21,11 +21,13 @@ class FeedItem: NSObject {
     var authorID: String?
     var feedImage: UIImage?
     
+    let dateFormatter = NSDateFormatter()
     // MARK: Private methods
     
     // MARK: Life Cycle methods
     
     override init() {
+        dateFormatter.dateFormat = "dd/MM/yyyy"
         super.init()
     }
     
@@ -60,5 +62,21 @@ class FeedItem: NSObject {
     
     func displayInfo()  {
         print("Title: \(title)")
+    }
+    
+    func getDateTakenString() -> String {
+        if let dateTaken = dateTaken {
+            return dateFormatter.stringFromDate(dateTaken)
+        }
+        
+        return ""
+    }
+    
+    func getDatePublishedString() -> String {
+        if let datePublished = datePublished {
+            return dateFormatter.stringFromDate(datePublished)
+        }
+        
+        return ""
     }
 }

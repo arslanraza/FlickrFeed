@@ -46,7 +46,7 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                             if let image = image {
                                 singleFeed.feedImage = image
                                 if let visibleCell = self.tableView.cellForRowAtIndexPath(indexPath) as? FeedItemCell {
-                                    visibleCell.feedImageView.image = image
+                                    visibleCell.imageViewFeed.image = image
                                 }
                             }
                     })
@@ -66,6 +66,8 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
         // Do any additional setup after loading the view.
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -95,15 +97,15 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell") as! FeedItemCell
         
         let singleFeed = currentFeeds[indexPath.row]
-        cell.feedTitle.text = singleFeed.title
+        cell.labelTitle.text = singleFeed.title
+        cell.labelAuthor.text = singleFeed.author
+        cell.labelDatePublished.text = singleFeed.getDatePublishedString()
+        
         if singleFeed.feedImage == nil {
-            cell.feedImageView.image = UIImage.init(named: "placeHolder")
+            cell.imageViewFeed.image = UIImage.init(named: "placeHolder")
         } else {
-            cell.feedImageView.image = singleFeed.feedImage
+            cell.imageViewFeed.image = singleFeed.feedImage
         }
-        //        ImageDownloader.sharedInstance.downloadImage(singleFeed.imageUrlString) { (image, imageURL) in
-        //            cell.feedImageView.image = image
-        //        }
         
         return cell
     }

@@ -64,11 +64,11 @@ class ImageDownloader: NSObject {
     
     // MARK: Public methods
     
-    /**
-     Download image for the given url string
-     @param imageURL: URL string for the image to be downloaded
-     @param completion: A completion block which will return an optional image object
-     */
+    
+    /// Download image for the given url string
+    /// - parameters:
+    ///   - imageURL: String value for the url
+    ///   - completion: A completion clousure
     func downloadImage(imageURL: String?, completion: ((image: UIImage?, imageURL: String) -> Void)) {
         
         guard let imageURL = imageURL else {
