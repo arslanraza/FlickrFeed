@@ -22,6 +22,7 @@ class FeedDetailController: UIViewController {
     @IBOutlet weak var textviewDescription: UITextView!
     @IBOutlet weak var viewHeader: UIView!
     @IBOutlet weak var viewFooter: UIView!
+    @IBOutlet weak var viewContainer: UIView!
     
     var isDetailAvailable = true
     
@@ -97,8 +98,15 @@ class FeedDetailController: UIViewController {
         self.navigationItem.rightBarButtonItem = barButton
     }
     
-    
-    
+    private func runScaleAnimation() {
+        UIView.animateWithDuration(0.5, animations: { 
+            self.viewContainer.alpha = 1.0
+            }) { (finished) in
+                UIView.animateWithDuration(0.5) {
+                    self.viewContainer.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                }
+        }
+    }
     
     // MARK: Life Cycle methods
     
@@ -107,6 +115,17 @@ class FeedDetailController: UIViewController {
         super.viewDidLoad()
         loadCurrentFeed()
         configureNavigationBar()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewContainer.alpha = 0
+        self.viewContainer.transform = CGAffineTransformMakeScale(0.9, 0.9)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        runScaleAnimation()
     }
     
     override func didReceiveMemoryWarning() {
@@ -135,8 +154,8 @@ class FeedDetailController: UIViewController {
             self.viewFooter.fadeOut()
             isDetailAvailable = false
         } else {
-            self.viewHeader.fadeTo(0.5)
-            self.viewFooter.fadeTo(0.5)
+            self.viewHeader.fadeTo(0.7)
+            self.viewFooter.fadeTo(0.7)
             isDetailAvailable = true
         }
         
