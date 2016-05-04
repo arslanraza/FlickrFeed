@@ -34,12 +34,13 @@ class FlickrFeedManager: NSObject {
     // MARK: Public methods
     
     /**
-     Load Public Feed from Flickr Public API
+     Load Feed from Flickr Public API
+     - Parameters: urlString a String value of the url to be loaded
      - Returns: An optional object of public feed array
      */
-    func loadPublicFeed(completion: ((feeds: Array<FeedItem>?) -> Void)) {
-        
-        let urlPath = kPublicFeedURL
+    
+    func loadFeedForURL(urlString: String, completion: ((feeds: Array<FeedItem>?) -> Void)) {
+        let urlPath = urlString
         
         guard let endpoint = NSURL(string: urlPath) else {
             print("Error creating Public API URL")
@@ -102,6 +103,21 @@ class FlickrFeedManager: NSObject {
                 })
             }
             }.resume()
-    }  
+    }
+    
+    /**
+     Load Public Feed from Flickr Public API
+     - Returns: An optional object of public feed array
+     */
+    func loadPublicFeed(completion: ((feeds: Array<FeedItem>?) -> Void)) {
+        loadFeedForURL(kPublicFeedURL, completion: completion)
+    }
+    
+    func searchFeedWithTag(tag: String, completion: ((feeds: Array<FeedItem>?) -> Void)) {
+        let urlString = kPublicFeedURL.stringByAppendingString("&tags=\(tag)")
+        loadFeedForURL(urlString, completion: completion)
+    }
+    
+    
     
 }

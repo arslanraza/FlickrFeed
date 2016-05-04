@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Gad-x4-n8b">
-                                <rect key="frame" x="0.0" y="92" width="600" height="508"/>
+                                <rect key="frame" x="0.0" y="136" width="600" height="464"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="80" id="Coy-wA-diE" customClass="FeedItemCell" customModule="FlickrFeed" customModuleProvider="target">
@@ -64,7 +64,7 @@
                                 </connections>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2vH-gj-WDq">
-                                <rect key="frame" x="0.0" y="64" width="600" height="29"/>
+                                <rect key="frame" x="0.0" y="108" width="600" height="29"/>
                                 <segments>
                                     <segment title="Date Taken"/>
                                     <segment title="Date Published"/>
@@ -73,27 +73,48 @@
                                     <action selector="segmentChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="XNX-ne-gLX"/>
                                 </connections>
                             </segmentedControl>
+                            <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search by tag" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sVQ-7H-EnQ">
+                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="pOu-lc-L5B"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="sVQ-7H-EnQ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="38O-Se-Y5s"/>
                             <constraint firstItem="Gad-x4-n8b" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6Us-Y5-ukF"/>
+                            <constraint firstAttribute="trailing" secondItem="sVQ-7H-EnQ" secondAttribute="trailing" id="LaD-2H-YzE"/>
+                            <constraint firstItem="Gad-x4-n8b" firstAttribute="top" secondItem="2vH-gj-WDq" secondAttribute="bottom" id="MfX-56-owu"/>
                             <constraint firstItem="Gad-x4-n8b" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="28" id="NGw-FZ-yXI"/>
+                            <constraint firstItem="sVQ-7H-EnQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="NLM-ff-Ufu"/>
                             <constraint firstAttribute="trailing" secondItem="2vH-gj-WDq" secondAttribute="trailing" id="PJR-1F-vXc"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Gad-x4-n8b" secondAttribute="bottom" id="Pfg-gv-BP4"/>
-                            <constraint firstItem="2vH-gj-WDq" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="nb3-Rb-2q7"/>
+                            <constraint firstItem="2vH-gj-WDq" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="44" id="nb3-Rb-2q7"/>
                             <constraint firstItem="2vH-gj-WDq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="x0u-20-gOb"/>
                             <constraint firstAttribute="trailing" secondItem="Gad-x4-n8b" secondAttribute="trailing" id="zky-WA-bzu"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="NGw-FZ-yXI"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Flickr Feed" id="hO7-fT-yWZ"/>
                     <connections>
+                        <outlet property="searchBar" destination="sVQ-7H-EnQ" id="YIR-ZD-a9v"/>
                         <outlet property="tableView" destination="Gad-x4-n8b" id="AOc-pL-tps"/>
                         <segue destination="XKz-fR-RFR" kind="show" identifier="FeedDetailView" id="ihU-X9-NYT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1548" y="246"/>
+            <point key="canvasLocation" x="1579" y="246"/>
         </scene>
         <!--Feed Detail Controller-->
         <scene sceneID="2tV-QT-acv">
@@ -232,7 +253,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2220" y="246"/>
+            <point key="canvasLocation" x="2347" y="239"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EVd-yn-6Z8">

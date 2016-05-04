@@ -10,9 +10,10 @@
 
 import UIKit
 
-class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     private var currentFeeds = Array<FeedItem>()
     private var selectedIndexPath: NSIndexPath?
@@ -20,6 +21,7 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: Private methods
     
     private func sortFeed(byDateTaken: Bool) {
+        hideKeyboard()
         if byDateTaken {
             currentFeeds = currentFeeds.sort({ $0.dateTaken!.isGreaterThanDate($1.dateTaken!) })
         } else {
@@ -53,6 +55,12 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    private func hideKeyboard() {
+        if searchBar.isFirstResponder() {
+            searchBar.resignFirstResponder()
+        }
+    }
+    
     // MARK: Life Cycle methods
     
     
@@ -60,11 +68,12 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         weak var weakSelf = self
         FlickrFeedManager.sharedManager.loadPublicFeed { (feeds) in
-            //            print(feeds)
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             if feeds != nil {
-                weakSelf?.currentFeeds = feeds!//feeds!.sort({ $0.dateTaken!.isGreaterThanDate($1.datePublished!) })
+                weakSelf?.currentFeeds = feeds!
                 weakSelf?.sortFeed(true)
             }
         }
@@ -103,6 +112,7 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        hideKeyboard()
         selectedIndexPath = indexPath
         performSegueWithIdentifier(Segues.FeedDetailView, sender: self)
     }
@@ -131,6 +141,27 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
      }
     
+    // MARK: UISearchBarDelegate Methods
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        hideKeyboard()
+        if searchBar.text?.characters.count > 0 {
+            weak var weakSelf = self
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            FlickrFeedManager.sharedManager.searchFeedWithTag(searchBar.text!, completion: { (feeds) in
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                if feeds != nil {
+                    weakSelf?.currentFeeds = feeds!
+                    weakSelf?.sortFeed(true)
+                }
+            })
+        }
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        hideKeyboard()
+    }
+    
     
     // MARK: Public methods
     
@@ -142,5 +173,7 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             sortFeed(false)
         }
     }
+    
+    
     
 }
