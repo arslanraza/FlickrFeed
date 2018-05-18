@@ -11,7 +11,7 @@ import UIKit
 let kPublicFeedURL       = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1"
 
 // Defining enum to manage JSON Parsing & fetching errors
-enum JSONError: String, ErrorType {
+enum JSONError: String, Error {
     case NoData = "ERROR: no data"
     case ConversionFailed = "ERROR: conversion from JSON failed"
 }
@@ -21,7 +21,7 @@ class FlickrFeedManager: NSObject {
     static let sharedManager = FlickrFeedManager()
     
     // Mark: Private Vars
-    private let session = SessionManager.mainSession
+    fileprivate let session = SessionManager.mainSession
     
     // MARK: Private methods
     
@@ -39,17 +39,20 @@ class FlickrFeedManager: NSObject {
      - Returns: An optional object of public feed array
      */
     
-    func loadFeedForURL(urlString: String, completion: ((feeds: Array<FeedItem>?) -> Void)) {
+    func loadFeedForURL(_ urlString: String, completion: @escaping ((_ feeds: Array<FeedItem>?) -> Void)) {
         let urlPath = urlString
         
-        guard let endpoint = NSURL(string: urlPath) else {
+        guard let endpoint = URL(string: urlPath) else {
             print("Error creating Public API URL")
-            completion(feeds: nil)
+            completion(nil)
             return
         }
         
-        let request = NSMutableURLRequest(URL:endpoint)
-        session.dataTaskWithRequest(request) { (data, response, error) in
+        let request = URLRequest(url: endpoint) //NSMutableURLRequest(url:endpoint)
+        
+        
+        
+        session.dataTask(with: request, completionHandler: { (data, response, error) in
             
             do {
                 guard let data = data else {
@@ -60,17 +63,17 @@ class FlickrFeedManager: NSObject {
                  JSON from flicker contains escape sequence \' which is not a valid json string.
                  We will have to extra step to remove the occurances of above escapse sequence
                  */
-                var jsonString = NSString(data: data, encoding: NSUTF8StringEncoding)
+                var jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
                 //                print(jsonString)
                 
                 // Removing the occurances of escape sequence which casues JSON parsing issues.
-                jsonString = jsonString?.stringByReplacingOccurrencesOfString("\\'", withString: "'")
+                jsonString = jsonString?.replacingOccurrences(of: "\\'", with: "'") as! NSString
                 
                 // Creating new data object from the refined json string
-                let refinedData = jsonString?.dataUsingEncoding(NSUTF8StringEncoding)
+                let refinedData = jsonString?.data(using: String.Encoding.utf8.rawValue)
                 
                 // PARSING JSON DATA
-                guard let json = try NSJSONSerialization.JSONObjectWithData(refinedData!, options: []) as? NSDictionary else {
+                guard let json = try JSONSerialization.jsonObject(with: refinedData!, options: []) as? NSDictionary else {
                     throw JSONError.ConversionFailed
                 }
                 
@@ -87,29 +90,29 @@ class FlickrFeedManager: NSObject {
                     feeds.append(singleFeed!)
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
-                    completion(feeds: feeds)
+                DispatchQueue.main.async(execute: {
+                    completion(feeds)
                 })
                 
             } catch let error as JSONError {
                 print(error.rawValue)
-                dispatch_async(dispatch_get_main_queue(), {
-                    completion(feeds: nil)
+                DispatchQueue.main.async(execute: {
+                    completion(nil)
                 })
             } catch let error as NSError {
                 print(error.debugDescription)
-                dispatch_async(dispatch_get_main_queue(), {
-                    completion(feeds: nil)
+                DispatchQueue.main.async(execute: {
+                    completion(nil)
                 })
             }
-            }.resume()
+            }) .resume()
     }
     
     /**
      Load Public Feed from Flickr Public API
      - Returns: An optional object of public feed array
      */
-    func loadPublicFeed(completion: ((feeds: Array<FeedItem>?) -> Void)) {
+    func loadPublicFeed(_ completion: @escaping ((_ feeds: Array<FeedItem>?) -> Void)) {
         loadFeedForURL(kPublicFeedURL, completion: completion)
     }
     
@@ -117,8 +120,8 @@ class FlickrFeedManager: NSObject {
      Search Public Feed with provided tags seperated by commas
      - Returns: An optional object of public feed array
      */
-    func searchFeedWithTag(tag: String, completion: ((feeds: Array<FeedItem>?) -> Void)) {
-        let urlString = kPublicFeedURL.stringByAppendingString("&tags=\(tag)")
+    func searchFeedWithTag(_ tag: String, completion: @escaping ((_ feeds: Array<FeedItem>?) -> Void)) {
+        let urlString = kPublicFeedURL + "&tags=\(tag)"
         loadFeedForURL(urlString, completion: completion)
     }
     

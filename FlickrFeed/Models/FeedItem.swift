@@ -14,14 +14,14 @@ class FeedItem: NSObject {
     var title: String?
     var link: String?
     var imageUrlString: String?
-    var dateTaken: NSDate?
-    var datePublished: NSDate?
+    var dateTaken: Date?
+    var datePublished: Date?
     var imageDescription: String?
     var author: String?
     var authorID: String?
     var feedImage: UIImage?
     
-    let dateFormatter = NSDateFormatter()
+    let dateFormatter = DateFormatter()
     // MARK: Private methods
     
     // MARK: Life Cycle methods
@@ -33,7 +33,7 @@ class FeedItem: NSObject {
     
     // MARK: Class Level Methods
     
-    static func ItemFromDictionary(dictionary: NSDictionary) -> FeedItem? {
+    static func ItemFromDictionary(_ dictionary: NSDictionary) -> FeedItem? {
         
         let item = FeedItem.init()
         
@@ -66,7 +66,7 @@ class FeedItem: NSObject {
     
     func getDateTakenString() -> String {
         if let dateTaken = dateTaken {
-            return dateFormatter.stringFromDate(dateTaken)
+            return dateFormatter.string(from: dateTaken)
         }
         
         return ""
@@ -74,7 +74,7 @@ class FeedItem: NSObject {
     
     func getDatePublishedString() -> String {
         if let datePublished = datePublished {
-            return dateFormatter.stringFromDate(datePublished)
+            return dateFormatter.string(from: datePublished)
         }
         
         return ""

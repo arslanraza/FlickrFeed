@@ -15,10 +15,10 @@ import UIKit
 class ImageDownloader: NSObject {
     static let sharedInstance = ImageDownloader()
     
-    private let session = SessionManager.mainSession
-    private var activeDownloads = NSMutableDictionary()
-    private var imageCache = ImageCache()
-    let cacheDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0]
+    fileprivate let session = SessionManager.mainSession
+    fileprivate var activeDownloads = NSMutableDictionary()
+    fileprivate var imageCache = ImageCache()
+    let cacheDir = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
     
     // MARK: Private methods
     
@@ -26,11 +26,11 @@ class ImageDownloader: NSObject {
      Retrives the provided image from the cache directory
      - Returns: UIImage optional value
      */
-    private func getImageFromDiskCache(imageURL: String) -> UIImage? {
+    fileprivate func getImageFromDiskCache(_ imageURL: String) -> UIImage? {
         
-        let filePath = cacheDir.stringByAppendingString("/\(imageURL.hash)")
-        if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
-            if let image = UIImage.init(data: NSData.init(contentsOfURL: NSURL(fileURLWithPath: filePath))!, scale: 1.0) {
+        let filePath = cacheDir + "/\(imageURL.hash)"
+        if FileManager.default.fileExists(atPath: filePath) {
+            if let image = UIImage.init(data: try! Data.init(contentsOf: URL(fileURLWithPath: filePath)), scale: 1.0) {
                 return image
             }
         }
@@ -44,12 +44,12 @@ class ImageDownloader: NSObject {
        - toURL: UIImage initial location on disk created by DownloadTask
        - toURL: NSURL location where the image will be stored
      */
-    private func saveImageToCache(image: UIImage, fromURL: NSURL, toURL: NSURL) {
+    fileprivate func saveImageToCache(_ image: UIImage, fromURL: URL, toURL: URL) {
         
-        imageCache.setObject(image, forKey: toURL)
+        imageCache.setObject(image, forKey: toURL as AnyObject)
         
         do {
-            try NSFileManager.defaultManager().copyItemAtURL(fromURL, toURL: toURL)
+            try FileManager.default.copyItem(at: fromURL, to: toURL)
         } catch  {
             print("Error saving image cache: \(error)")
         }
@@ -69,7 +69,7 @@ class ImageDownloader: NSObject {
     /// - parameters:
     ///   - imageURL: String value for the url
     ///   - completion: A completion clousure
-    func downloadImage(imageURL: String?, completion: ((image: UIImage?, imageURL: String) -> Void)) {
+    func downloadImage(_ imageURL: String?, completion: @escaping ((_ image: UIImage?, _ imageURL: String) -> Void)) {
         
         guard let imageURL = imageURL else {
             return
@@ -77,64 +77,64 @@ class ImageDownloader: NSObject {
         
         
         // Check if the image exists in the memory cache
-        if let image = imageCache.objectForKey(imageURL) as? UIImage {
-            completion(image: image, imageURL: imageURL)
+        if let image = imageCache.object(forKey: imageURL as AnyObject) as? UIImage {
+            completion(image, imageURL)
             return
         } else {
             // Check if the image exists in the Disk cache
             if let image = getImageFromDiskCache(imageURL) {
-                imageCache.setObject(image, forKey: imageURL)
-                completion(image: image, imageURL: imageURL)
+                imageCache.setObject(image, forKey: imageURL as AnyObject)
+                completion(image, imageURL)
             } else {
                 
-                if activeDownloads.valueForKey(imageURL) == nil {
+                if activeDownloads.value(forKey: imageURL) == nil {
                     
-                    guard let endpoint = NSURL(string: imageURL) else {
+                    guard let endpoint = URL(string: imageURL) else {
                         print("Error creating NSURL for image")
-                        completion(image: nil, imageURL: imageURL)
+                        completion(nil, imageURL)
                         return
                     }
                     
                     //        let request = NSMutableURLRequest(URL:endpoint)
                     weak var weakSelf = self
                     
-                    let downloadTask = session.downloadTaskWithURL(endpoint) { (url, urlResponse, error) in
+                    let downloadTask = session.downloadTask(with: endpoint, completionHandler: { (url, urlResponse, error) in
                         
                         if error == nil {
                             
-                            if let image = UIImage.init(data: NSData(contentsOfURL: url!)!) {
+                            if let image = UIImage.init(data: try! Data(contentsOf: url!)) {
                                 //                        print("ImageDownloaded: \(imageURL)")
                                 
-                                let destinationURL = NSURL(fileURLWithPath: (self.cacheDir.stringByAppendingString("/\(imageURL.hash)")))
+                                let destinationURL = URL(fileURLWithPath: (self.cacheDir + "/\(imageURL.hash)"))
                                 //                                print("Destination : \(destinationURL)")
                                 
                                 weakSelf?.saveImageToCache(image, fromURL: url!, toURL: destinationURL)
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    completion(image: image, imageURL: imageURL)
+                                DispatchQueue.main.async(execute: {
+                                    completion(image, imageURL)
                                 })
                                 
                             } else {
                                 print("Image Not Found")
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    completion(image: nil, imageURL: imageURL)
+                                DispatchQueue.main.async(execute: {
+                                    completion(nil, imageURL)
                                 })
                             }
                             
                         } else {
-                            print(error)
-                            dispatch_async(dispatch_get_main_queue(), {
-                                completion(image: nil, imageURL: imageURL)
+                            print(error as Any)
+                            DispatchQueue.main.async(execute: {
+                                completion(nil, imageURL)
                             })
                         }
                         
-                        weakSelf?.activeDownloads.removeObjectForKey(imageURL)
+                        weakSelf?.activeDownloads.removeObject(forKey: imageURL)
                         
-                    }
+                    }) 
                     // Starts the download task
                     downloadTask.resume()
                     
                     // Adding download tasks in the activeDownloads dictionary
-                    activeDownloads.setObject(downloadTask, forKey: imageURL)
+                    activeDownloads.setObject(downloadTask, forKey: imageURL as NSCopying)
                 }
             }
         }        

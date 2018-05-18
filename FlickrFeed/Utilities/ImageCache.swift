@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ImageCache: NSCache {
+class ImageCache: NSCache<AnyObject, AnyObject> {
     
     // MARK: Private methods
     

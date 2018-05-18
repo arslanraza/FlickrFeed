@@ -31,14 +31,14 @@ class FeedDetailController: UIViewController {
     /**
      Loads current Feed data to the UI
      */
-    @objc private func loadCurrentFeed() {
+    @objc fileprivate func loadCurrentFeed() {
         
         if let currentFeedItem = currentFeedItem {
             
             labelTitle.text = currentFeedItem.title
             labelAuthor.text = currentFeedItem.author
             
-            let str = currentFeedItem.imageDescription!.stringByReplacingOccurrencesOfString("<[^>]+>", withString: "", options: .RegularExpressionSearch, range: nil)
+            let str = currentFeedItem.imageDescription!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
             textviewDescription.text = str//currentFeedItem.imageDescription
             imageView.image = currentFeedItem.feedImage
             
@@ -48,16 +48,16 @@ class FeedDetailController: UIViewController {
     /**
      Displays Alert when image is successfully saved
      */
-    private func showImageSaveAlert() {
+    fileprivate func showImageSaveAlert() {
         RUUtility.showInfoAlert("Image Saved Successfully", message: nil, controller: self)
     }
     
     /**
      Opens the feed in the Safari Browser
      */
-    private func openFeedInBrowser() {
-        if let url = NSURL(string: (currentFeedItem?.link)!) {
-            UIApplication.sharedApplication().openURL(url)
+    fileprivate func openFeedInBrowser() {
+        if let url = URL(string: (currentFeedItem?.link)!) {
+            UIApplication.shared.openURL(url)
         }
     }
     
@@ -65,7 +65,7 @@ class FeedDetailController: UIViewController {
      Opens default mail client with image as an attachment
      - Returns: MFMailComposeViewController
      */
-    private func shareImageWithEmail () -> MFMailComposeViewController? {
+    fileprivate func shareImageWithEmail () -> MFMailComposeViewController? {
         
         if MFMailComposeViewController.canSendMail() {
             let mailComposeVC = MFMailComposeViewController()
@@ -76,7 +76,7 @@ class FeedDetailController: UIViewController {
             
             mailComposeVC.setMessageBody("<html><body><p>Shared via Flickr Feed</p></body></html>", isHTML: true)
             
-            self.presentViewController(mailComposeVC, animated: true, completion: nil)
+            self.present(mailComposeVC, animated: true, completion: nil)
             
             return mailComposeVC
         } else {
@@ -86,43 +86,43 @@ class FeedDetailController: UIViewController {
         return nil
     }
     
-    @objc private func openSheet() {
+    @objc fileprivate func openSheet() {
         
-        let alert = UIAlertController(title: "Actions", message: "Choose action", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alert = UIAlertController(title: "Actions", message: "Choose action", preferredStyle: UIAlertControllerStyle.actionSheet)
         
-        alert.addAction(UIAlertAction(title: "Save Image", style: .Default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "Save Image", style: .default, handler: { (action) in
             RUUtility.saveImageToGallery(self.currentFeedItem?.feedImage, target: nil, selector: nil)
             self.showImageSaveAlert()
         }))
         
-        alert.addAction(UIAlertAction(title: "Open in browser", style: .Default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "Open in browser", style: .default, handler: { (action) in
             self.openFeedInBrowser()
         }))
         
-        alert.addAction(UIAlertAction(title: "Share By Email", style: .Default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "Share By Email", style: .default, handler: { (action) in
             self.shareImageWithEmail()
         }))
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) in
-            alert.dismissViewControllerAnimated(true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
         }))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    private func configureNavigationBar() {
-        let barButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(self.openSheet))
+    fileprivate func configureNavigationBar() {
+        let barButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.openSheet))
         self.navigationItem.rightBarButtonItem = barButton
     }
     
-    private func runScaleAnimation() {
-        UIView.animateWithDuration(0.5, animations: { 
+    fileprivate func runScaleAnimation() {
+        UIView.animate(withDuration: 0.5, animations: { 
             self.viewContainer.alpha = 1.0
-            }) { (finished) in
-                UIView.animateWithDuration(0.5) {
-                    self.viewContainer.transform = CGAffineTransformMakeScale(1.0, 1.0)
-                }
-        }
+            }, completion: { (finished) in
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.viewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }) 
+        }) 
     }
     
     // MARK: Life Cycle methods
@@ -133,13 +133,13 @@ class FeedDetailController: UIViewController {
         configureNavigationBar()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewContainer.alpha = 0
-        self.viewContainer.transform = CGAffineTransformMakeScale(0.9, 0.9)
+        self.viewContainer.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         runScaleAnimation()
     }
@@ -154,7 +154,7 @@ class FeedDetailController: UIViewController {
     /**
     Hides or Unhides the Header and Footer view on tap event
     */
-    @IBAction func handleTap(sender: AnyObject) {
+    @IBAction func handleTap(_ sender: AnyObject) {
         //        print("Tap Done")
         
         if isDetailAvailable {

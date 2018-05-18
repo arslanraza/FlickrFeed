@@ -9,14 +9,38 @@
 // Checkpoint for Stopping Work
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    private var currentFeeds = Array<FeedItem>()
-    private var selectedIndexPath: NSIndexPath?
+    fileprivate var currentFeeds = Array<FeedItem>()
+    fileprivate var selectedIndexPath: IndexPath?
     
     // MARK: Private methods
     
@@ -25,12 +49,12 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
      - Parameters:
          - byDateTaken: Boolean value. Will sort by published date when passed false
      */
-    private func sortFeed(byDateTaken: Bool) {
+    fileprivate func sortFeed(_ byDateTaken: Bool) {
         hideKeyboard()
         if byDateTaken {
-            currentFeeds = currentFeeds.sort({ $0.dateTaken!.isGreaterThanDate($1.dateTaken!) })
+            currentFeeds = currentFeeds.sorted(by: { $0.dateTaken!.isGreaterThanDate($1.dateTaken!) })
         } else {
-            currentFeeds = currentFeeds.sort({ $0.datePublished!.isGreaterThanDate($1.datePublished!) })
+            currentFeeds = currentFeeds.sorted(by: { $0.datePublished!.isGreaterThanDate($1.datePublished!) })
         }
         
         self.tableView.reloadData()
@@ -40,7 +64,7 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     /**
      Downloads Images for only visible cells.
      */
-    private func downloadImagesForVisibleCells() {
+    fileprivate func downloadImagesForVisibleCells() {
         if currentFeeds.count > 0 {
             
             let visiblePaths = tableView.indexPathsForVisibleRows
@@ -54,7 +78,7 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                                 singleFeed.feedImage = image
                                 // VisibleCell will only have a value if its currently displayed on screen
                                 // Out of bound cells will return for the following check
-                                if let visibleCell = self.tableView.cellForRowAtIndexPath(indexPath) as? FeedItemCell {
+                                if let visibleCell = self.tableView.cellForRow(at: indexPath) as? FeedItemCell {
                                     visibleCell.imageViewFeed.image = image
                                 }
                             }
@@ -67,8 +91,8 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     /**
      Hides the keyboard if its present on screen
     */
-    private func hideKeyboard() {
-        if searchBar.isFirstResponder() {
+    fileprivate func hideKeyboard() {
+        if searchBar.isFirstResponder {
             searchBar.resignFirstResponder()
         }
     }
@@ -76,12 +100,12 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     /**
      Loads Public Flickr Feed
      */
-    @objc private func loadPublicFeed() {
+    @objc fileprivate func loadPublicFeed() {
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         weak var weakSelf = self
         FlickrFeedManager.sharedManager.loadPublicFeed { (feeds) in
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             if feeds != nil {
                 weakSelf?.currentFeeds = feeds!
                 weakSelf?.sortFeed(true)
@@ -92,11 +116,11 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     /**
      Configures navigation bar
      */
-    private func configureNavigationBar() {
+    fileprivate func configureNavigationBar() {
         
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        let barButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: #selector(self.loadPublicFeed))
+        let barButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.loadPublicFeed))
         navigationItem.rightBarButtonItem = barButton
     }
     
@@ -118,13 +142,13 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     // MARK: - UITableViewDataSource Methods
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (currentFeeds.count)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell") as! FeedItemCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell") as! FeedItemCell
         
         let singleFeed = currentFeeds[indexPath.row]
         cell.labelTitle.text = singleFeed.title
@@ -142,16 +166,16 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     // MARK: - UITableViewDelegate Methods
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         hideKeyboard()
         selectedIndexPath = indexPath
-        performSegueWithIdentifier(Segues.FeedDetailView, sender: self)
+        performSegue(withIdentifier: Segues.FeedDetailView, sender: self)
     }
     
     // MARK: UIScrollVIewDelegate Methods
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         print("didEndDecelerating")
         downloadImagesForVisibleCells()
     }
@@ -161,13 +185,13 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
         if segue.identifier == Segues.FeedDetailView {
             print("Perform Custom Action")
             let singleFeed = currentFeeds[selectedIndexPath!.row]
-            let feedDetailView = segue.destinationViewController as! FeedDetailController
+            let feedDetailView = segue.destination as! FeedDetailController
             feedDetailView.title = "Feed Detail"
             feedDetailView.currentFeedItem = singleFeed
         }
@@ -175,13 +199,13 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     // MARK: UISearchBarDelegate Methods
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         hideKeyboard()
         if searchBar.text?.characters.count > 0 {
             weak var weakSelf = self
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
             FlickrFeedManager.sharedManager.searchFeedWithTag(searchBar.text!, completion: { (feeds) in
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 if feeds != nil {
                     weakSelf?.currentFeeds = feeds!
                     weakSelf?.sortFeed(true)
@@ -190,14 +214,14 @@ class FeedsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         hideKeyboard()
     }
     
     
     // MARK: Public methods
     
-    @IBAction func segmentChanged(segmentControl: UISegmentedControl) {
+    @IBAction func segmentChanged(_ segmentControl: UISegmentedControl) {
         
         if segmentControl.selectedSegmentIndex == 0 {
             sortFeed(true)

@@ -13,6 +13,6 @@ class SessionManager  {
     /**
      MAIN NSURLSession which will be used for all network calls
      */
-    static let mainSession =  NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+    static let mainSession =  URLSession.init(configuration: URLSessionConfiguration.default)
     
 }

@@ -13,13 +13,13 @@ import UIKit
 // NSDate EXTENSION
 // ===========================================================
 
-extension NSDate {
-    func isGreaterThanDate(dateToCompare: NSDate) -> Bool {
+extension Date {
+    func isGreaterThanDate(_ dateToCompare: Date) -> Bool {
         //Declare Variables
         var isGreater = false
         
         //Compare Values
-        if self.compare(dateToCompare) == NSComparisonResult.OrderedDescending {
+        if self.compare(dateToCompare) == ComparisonResult.orderedDescending {
             isGreater = true
         }
         
@@ -27,12 +27,12 @@ extension NSDate {
         return isGreater
     }
     
-    func isLessThanDate(dateToCompare: NSDate) -> Bool {
+    func isLessThanDate(_ dateToCompare: Date) -> Bool {
         //Declare Variables
         var isLess = false
         
         //Compare Values
-        if self.compare(dateToCompare) == NSComparisonResult.OrderedAscending {
+        if self.compare(dateToCompare) == ComparisonResult.orderedAscending {
             isLess = true
         }
         
@@ -40,12 +40,12 @@ extension NSDate {
         return isLess
     }
     
-    func equalToDate(dateToCompare: NSDate) -> Bool {
+    func equalToDate(_ dateToCompare: Date) -> Bool {
         //Declare Variables
         var isEqualTo = false
         
         //Compare Values
-        if self.compare(dateToCompare) == NSComparisonResult.OrderedSame {
+        if self.compare(dateToCompare) == ComparisonResult.orderedSame {
             isEqualTo = true
         }
         
@@ -65,13 +65,13 @@ let kAnimTime = 0.3
 extension UIView {
     
     func fadeOut() {
-        UIView.animateWithDuration(kAnimTime, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: kAnimTime, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             self.alpha = 0.0
             }, completion: nil)
     }
     
-    func fadeTo(alpha: CGFloat) {
-        UIView.animateWithDuration(kAnimTime, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    func fadeTo(_ alpha: CGFloat) {
+        UIView.animate(withDuration: kAnimTime, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             self.alpha = alpha
             }, completion: nil)
     }

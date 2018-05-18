@@ -16,15 +16,15 @@ class RUUtility: NSObject {
     ///   - target: Target to be notified on successfull completion of image save
     ///   - selector: Selector to be called on the provided target on completion
     
-    static func getDateFromString(dateString: String) -> NSDate? {
+    static func getDateFromString(_ dateString: String) -> Date? {
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC")
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         
 //        var newDateString = dateString.stringByReplacingOccurrencesOfString("T", withString: " ")
 //        newDateString = newDateString.stringByReplacingOccurrencesOfString("Z", withString: "")
-        let date = dateFormatter.dateFromString(dateString)
+        let date = dateFormatter.date(from: dateString)
         
         return date
     }
@@ -35,7 +35,7 @@ class RUUtility: NSObject {
     ///   - target: Target to be notified on successfull completion of image save
     ///   - selector: Selector to be called on the provided target on completion
     
-    static func saveImageToGallery(image: UIImage?, target: AnyObject?, selector: Selector) {
+    static func saveImageToGallery(_ image: UIImage?, target: AnyObject?, selector: Selector?) {
         if let image = image {
             UIImageWriteToSavedPhotosAlbum(image, target, selector, nil)
         }
@@ -48,13 +48,13 @@ class RUUtility: NSObject {
     ///   - controller: UIViewController object on which the alert will be displayed
     /// - Returns: UIAlertController
     
-    static func showInfoAlert(title: String?, message: String?, controller: UIViewController) -> UIAlertController {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { (action) in
-            alert.dismissViewControllerAnimated(true, completion: nil)
+    static func showInfoAlert(_ title: String?, message: String?, controller: UIViewController) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
         }))
         
-        controller.presentViewController(alert, animated: true, completion: nil)
+        controller.present(alert, animated: true, completion: nil)
         return alert
     }
 }
